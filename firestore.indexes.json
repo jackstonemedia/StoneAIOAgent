@@ -1,0 +1,97 @@
+{
+    "indexes": [
+        {
+            "collectionGroup": "agents",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "runs",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "runs",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "primaryScore",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "strategies",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "averageScore",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "reflections",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "status",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "experiments",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "teamMemory",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "supportingScore",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "notifications",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "read",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        }
+    ],
+    "fieldOverrides": []
+}

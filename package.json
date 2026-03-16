@@ -1,0 +1,17 @@
+{
+  "name": "stone-aio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "deploy": "vite build && firebase deploy"
+  },
+  "dependencies": {
+    "firebase": "^10.8.0"
+  },
+  "devDependencies": {
+    "vite": "^5.1.4"
+  }
+}

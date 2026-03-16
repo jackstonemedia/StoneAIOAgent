@@ -1,0 +1,124 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+    
+    function isValidStringLength(field, minLen, maxLen) {
+      return request.resource.data[field] is string &&
+        request.resource.data[field].size() >= minLen &&
+        request.resource.data[field].size() <= maxLen;
+    }
+    
+    function isValidOptionalStringLength(field, minLen, maxLen) {
+      return !(field in request.resource.data) || (
+        request.resource.data[field] is string &&
+        request.resource.data[field].size() >= minLen &&
+        request.resource.data[field].size() <= maxLen
+      );
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) &&
+        request.resource.data.uid == userId &&
+        isValidStringLength('email', 3, 100) &&
+        isValidOptionalStringLength('displayName', 0, 100) &&
+        isValidOptionalStringLength('photoURL', 0, 1000);
+      allow update: if isOwner(userId) &&
+        request.resource.data.uid == resource.data.uid &&
+        isValidOptionalStringLength('displayName', 0, 100) &&
+        isValidOptionalStringLength('photoURL', 0, 1000);
+      allow delete: if false; // Users cannot delete their own profile directly
+
+      match /agents/{agentId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) &&
+          request.resource.data.agentId == agentId &&
+          isValidStringLength('name', 1, 100) &&
+          request.resource.data.type in ["workflow", "autonomous", "voice", "browser", "content", "email"];
+        allow update: if isOwner(userId) &&
+          request.resource.data.agentId == resource.data.agentId &&
+          isValidOptionalStringLength('name', 1, 100);
+        allow delete: if isOwner(userId);
+
+        match /strategies/{strategyId} {
+          allow read: if isOwner(userId);
+          allow create: if isOwner(userId) &&
+            request.resource.data.strategyId == strategyId &&
+            isValidStringLength('name', 1, 100);
+          allow update: if isOwner(userId) &&
+            request.resource.data.strategyId == resource.data.strategyId &&
+            isValidOptionalStringLength('name', 1, 100);
+          allow delete: if isOwner(userId);
+        }
+
+        match /runs/{runId} {
+          allow read: if isOwner(userId);
+          allow create: if isOwner(userId) &&
+            request.resource.data.runId == runId &&
+            request.resource.data.agentId == agentId;
+          allow update: if isOwner(userId) &&
+            request.resource.data.runId == resource.data.runId &&
+            request.resource.data.agentId == resource.data.agentId;
+          allow delete: if isOwner(userId);
+        }
+
+        match /reflections/{reflectionId} {
+          allow read: if isOwner(userId);
+          allow create: if isOwner(userId) &&
+            request.resource.data.reflectionId == reflectionId;
+          allow update: if isOwner(userId) &&
+            request.resource.data.reflectionId == resource.data.reflectionId;
+          allow delete: if isOwner(userId);
+        }
+      }
+
+      match /experiments/{experimentId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) &&
+          request.resource.data.experimentId == experimentId;
+        allow update: if isOwner(userId) &&
+          request.resource.data.experimentId == resource.data.experimentId;
+        allow delete: if isOwner(userId);
+      }
+
+      match /teamMemory/{memoryId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) &&
+          request.resource.data.memoryId == memoryId;
+        allow update: if isOwner(userId) &&
+          request.resource.data.memoryId == resource.data.memoryId;
+        allow delete: if isOwner(userId);
+      }
+
+      match /notifications/{notifId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) &&
+          request.resource.data.notifId == notifId;
+        allow update: if isOwner(userId) &&
+          request.resource.data.notifId == resource.data.notifId;
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}
