@@ -942,41 +942,50 @@ input:checked + .toggle-slider:before {
   transform: translateX(20px);
 }
 
- / *   M o b i l e   R e s p o n s i v e n e s s   * / 
- @ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   { 
-     # s i d e b a r   { 
-         p o s i t i o n :   f i x e d ; 
-         t r a n s f o r m :   t r a n s l a t e X ( - 1 0 0 % ) ; 
-         t r a n s i t i o n :   t r a n s f o r m   0 . 3 s   e a s e ; 
-         z - i n d e x :   1 0 0 0 ; 
-     } 
-     # s i d e b a r . o p e n   { 
-         t r a n s f o r m :   t r a n s l a t e X ( 0 ) ; 
-     } 
-     . a g e n t - c a r d ,   . t y p e - c a r d ,   . c a r d   { 
-         w i d t h :   1 0 0 %   ! i m p o r t a n t ; 
-     } 
-     . d a s h b o a r d - g r i d   { 
-         g r i d - t e m p l a t e - c o l u m n s :   1 f r ; 
-     } 
-     . d a s h b o a r d - c o l - l e f t ,   . d a s h b o a r d - c o l - r i g h t   { 
-         w i d t h :   1 0 0 % ; 
-     } 
-     . m o d a l - c o n t e n t   { 
-         w i d t h :   1 0 0 %   ! i m p o r t a n t ; 
-         h e i g h t :   1 0 0 v h   ! i m p o r t a n t ; 
-         b o r d e r - r a d i u s :   0   ! i m p o r t a n t ; 
-     } 
-     . r u n - m o d a l   { 
-         m a r g i n - t o p :   a u t o ; 
-         h e i g h t :   9 0 v h   ! i m p o r t a n t ; 
-         b o r d e r - r a d i u s :   1 6 p x   1 6 p x   0   0   ! i m p o r t a n t ; 
-         a n i m a t i o n :   s l i d e U p   0 . 3 s   e a s e - o u t ; 
-     } 
-     @ k e y f r a m e s   s l i d e U p   { 
-         f r o m   {   t r a n s f o r m :   t r a n s l a t e Y ( 1 0 0 % ) ;   } 
-         t o   {   t r a n s f o r m :   t r a n s l a t e Y ( 0 ) ;   } 
-     } 
- } 
-  
- 
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  #sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  .agent-card, .type-card, .card {
+    width: 100% !important;
+  }
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-col-left, .dashboard-col-right {
+    width: 100%;
+  }
+  .modal-content {
+    width: 100% !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+  }
+  .run-modal {
+    margin-top: auto;
+    height: 90vh !important;
+    border-radius: 16px 16px 0 0 !important;
+    animation: slideUp 0.3s ease-out;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .team-health-bar {
+    flex-wrap: wrap;
+  }
+  .team-health-bar > div {
+    flex: 1 1 45%;
+    border-right: none !important;
+    padding: 0.5rem 0;
+  }
+}

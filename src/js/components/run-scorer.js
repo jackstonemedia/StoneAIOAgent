@@ -1,3 +1,5 @@
+import { scoreRun } from '../api.js';
+
 export function renderRunScorer(runId, agentId) {
   return `
     <div class="run-scorer card" id="scorer-${runId}" style="margin-top: 1rem; background: rgba(0,0,0,0.2); border-color: var(--border-color);">
@@ -60,8 +62,6 @@ export function init() {
       btn.disabled = true;
 
       try {
-        const { scoreRun } = await import('../api.js');
-
         const result = await scoreRun(agentId, runId, primaryScore, { rating }, rating, noteInput);
 
         const { weightedScore, savedToLibrary, suggestExperiment } = result;

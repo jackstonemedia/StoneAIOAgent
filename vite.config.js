@@ -5,6 +5,18 @@ export default defineConfig(({ mode }) => {
   return {
     build: {
       outDir: 'dist',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            firebase: [
+              'firebase/app',
+              'firebase/auth',
+              'firebase/firestore',
+              'firebase/functions'
+            ]
+          }
+        }
+      }
     },
     server: {
       host: '0.0.0.0',
