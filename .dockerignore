@@ -1,0 +1,7 @@
+node_modules
+.git
+.firebase
+.env
+functions/node_modules
+dist
+dist-ssr
