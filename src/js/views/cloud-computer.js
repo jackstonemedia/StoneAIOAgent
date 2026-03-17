@@ -7,16 +7,16 @@ let listeners = [];
 let sessions = [];
 
 const ENVIRONMENTS = [
-    { id: 'browser', name: 'Browser Agent', icon: '🌐', desc: 'Automate web tasks with a headless browser', color: '#e8622c', specs: '2 vCPU • 4GB RAM • Chrome' },
-    { id: 'scraper', name: 'Data Scraper', icon: '🕷️', desc: 'Extract and structure data from any website', color: '#8b5cf6', specs: '2 vCPU • 4GB RAM • Python' },
-    { id: 'monitor', name: 'Web Monitor', icon: '📡', desc: 'Watch pages for changes and get alerted', color: '#14b8a6', specs: '1 vCPU • 2GB RAM • Node.js' },
-    { id: 'notebook', name: 'AI Notebook', icon: '📓', desc: 'Run analysis with Python + AI models', color: '#f59e0b', specs: '4 vCPU • 8GB RAM • Python + GPU' },
-    { id: 'api', name: 'API Worker', icon: '⚡', desc: 'Run long API workflows without timeouts', color: '#60a5fa', specs: '2 vCPU • 4GB RAM • Node.js' },
-    { id: 'custom', name: 'Custom Task', icon: '🔧', desc: 'Configure your own cloud environment', color: '#a78bfa', specs: 'Configurable' }
+  { id: 'browser', name: 'Browser Agent', icon: '🌐', desc: 'Automate web tasks with a headless browser', color: '#e8622c', specs: '2 vCPU • 4GB RAM • Chrome' },
+  { id: 'scraper', name: 'Data Scraper', icon: '🕷️', desc: 'Extract and structure data from any website', color: '#8b5cf6', specs: '2 vCPU • 4GB RAM • Python' },
+  { id: 'monitor', name: 'Web Monitor', icon: '📡', desc: 'Watch pages for changes and get alerted', color: '#14b8a6', specs: '1 vCPU • 2GB RAM • Node.js' },
+  { id: 'notebook', name: 'AI Notebook', icon: '📓', desc: 'Run analysis with Python + AI models', color: '#f59e0b', specs: '4 vCPU • 8GB RAM • Python + GPU' },
+  { id: 'api', name: 'API Worker', icon: '⚡', desc: 'Run long API workflows without timeouts', color: '#60a5fa', specs: '2 vCPU • 4GB RAM • Node.js' },
+  { id: 'custom', name: 'Custom Task', icon: '🔧', desc: 'Configure your own cloud environment', color: '#a78bfa', specs: 'Configurable' }
 ];
 
 export async function render() {
-    return `
+  return `
     <div class="dashboard-container" style="max-width: 1200px; margin: 0 auto;">
       <!-- Header -->
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
@@ -31,6 +31,22 @@ export async function render() {
             <span class="status-dot idle"></span>
             <span id="cc-status-text">No active sessions</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Central Prompt Bar -->
+      <div style="margin: 2rem auto 4rem auto; max-width: 720px; text-align: center;">
+        <div class="landing-prompt-manus" style="margin-bottom: 1rem; box-shadow: var(--shadow-sm);">
+          <input type="text" placeholder="What can I do for you?" />
+          <button class="landing-prompt-btn">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          </button>
+        </div>
+        <div class="landing-tags-manus">
+          <span class="tags-label" style="color: var(--text-muted); font-size: 0.8rem;">Launch Environment:</span>
+          <button class="tag-btn" onclick="window.cloudView.launchSession('browser')">Browser Agent</button>
+          <button class="tag-btn" onclick="window.cloudView.launchSession('scraper')">Data Scraper</button>
+          <button class="tag-btn" onclick="window.cloudView.launchSession('notebook')">AI Notebook</button>
         </div>
       </div>
 
@@ -102,211 +118,211 @@ export async function render() {
 }
 
 export async function init() {
-    const user = getCurrentUser();
+  const user = getCurrentUser();
 
-    window.cloudView = {
-        launchSession: async (envId) => {
-            if (isGuestMode()) {
-                const { checkGuestLimit } = await import('../auth.js');
-                if (!checkGuestLimit('launch a cloud session')) return;
-            }
+  window.cloudView = {
+    launchSession: async (envId) => {
+      if (isGuestMode()) {
+        const { checkGuestLimit } = await import('../auth.js');
+        if (!checkGuestLimit('launch a cloud session')) return;
+      }
 
-            const env = ENVIRONMENTS.find(e => e.id === envId);
-            if (!env) return;
+      const env = ENVIRONMENTS.find(e => e.id === envId);
+      if (!env) return;
 
-            // Create session
-            const sessionId = crypto.randomUUID();
-            const session = {
-                sessionId,
-                envId: env.id,
-                envName: env.name,
-                envIcon: env.icon,
-                envColor: env.color,
-                specs: env.specs,
-                status: 'starting',
-                startedAt: new Date().toISOString(),
-                cpuUsage: 0,
-                ramUsage: 0,
-                logs: []
-            };
+      // Create session
+      const sessionId = crypto.randomUUID();
+      const session = {
+        sessionId,
+        envId: env.id,
+        envName: env.name,
+        envIcon: env.icon,
+        envColor: env.color,
+        specs: env.specs,
+        status: 'starting',
+        startedAt: new Date().toISOString(),
+        cpuUsage: 0,
+        ramUsage: 0,
+        logs: []
+      };
 
-            sessions.push(session);
-            renderSessions();
-            addLog(`[${env.name}] Session ${sessionId.substring(0, 8)} starting...`);
+      sessions.push(session);
+      renderSessions();
+      addLog(`[${env.name}] Session ${sessionId.substring(0, 8)} starting...`);
 
-            // Simulate startup
-            setTimeout(() => {
-                session.status = 'running';
-                session.cpuUsage = Math.floor(Math.random() * 30) + 10;
-                session.ramUsage = Math.floor(Math.random() * 40) + 20;
-                renderSessions();
-                updateStats();
-                addLog(`[${env.name}] ✓ Environment ready. All services operational.`);
-                addLog(`[${env.name}] Allocated: ${env.specs}`);
-            }, 2000);
+      // Simulate startup
+      setTimeout(() => {
+        session.status = 'running';
+        session.cpuUsage = Math.floor(Math.random() * 30) + 10;
+        session.ramUsage = Math.floor(Math.random() * 40) + 20;
+        renderSessions();
+        updateStats();
+        addLog(`[${env.name}] ✓ Environment ready. All services operational.`);
+        addLog(`[${env.name}] Allocated: ${env.specs}`);
+      }, 2000);
 
-            // Persist to Firestore if authenticated
-            if (user) {
-                try {
-                    await setDoc(doc(db, 'users', user.uid, 'cloudSessions', sessionId), {
-                        ...session,
-                        createdAt: serverTimestamp(),
-                        uid: user.uid
-                    });
-                } catch (e) {
-                    console.error('Error saving session:', e);
-                }
-            }
-
-            updateStats();
-        },
-
-        stopSession: async (sessionId) => {
-            const idx = sessions.findIndex(s => s.sessionId === sessionId);
-            if (idx === -1) return;
-
-            const session = sessions[idx];
-            session.status = 'stopping';
-            renderSessions();
-            addLog(`[${session.envName}] Shutting down session ${sessionId.substring(0, 8)}...`);
-
-            setTimeout(() => {
-                sessions.splice(idx, 1);
-                renderSessions();
-                updateStats();
-                addLog(`[${session.envName}] Session terminated.`);
-            }, 1500);
-
-            if (user) {
-                try { await deleteDoc(doc(db, 'users', user.uid, 'cloudSessions', sessionId)); } catch (e) { }
-            }
-        },
-
-        restartSession: async (sessionId) => {
-            const session = sessions.find(s => s.sessionId === sessionId);
-            if (!session) return;
-            session.status = 'restarting';
-            renderSessions();
-            addLog(`[${session.envName}] Restarting...`);
-            setTimeout(() => {
-                session.status = 'running';
-                session.cpuUsage = Math.floor(Math.random() * 30) + 10;
-                session.ramUsage = Math.floor(Math.random() * 40) + 20;
-                renderSessions();
-                addLog(`[${session.envName}] ✓ Restart complete.`);
-            }, 2000);
-        },
-
-        clearLogs: () => {
-            const logsEl = document.getElementById('cc-logs');
-            if (logsEl) logsEl.innerHTML = '<div style="color: var(--text-muted);">Logs cleared.</div>';
+      // Persist to Firestore if authenticated
+      if (user) {
+        try {
+          await setDoc(doc(db, 'users', user.uid, 'cloudSessions', sessionId), {
+            ...session,
+            createdAt: serverTimestamp(),
+            uid: user.uid
+          });
+        } catch (e) {
+          console.error('Error saving session:', e);
         }
-    };
+      }
 
-    // Load existing sessions from Firestore
-    if (user) {
-        const sessionsRef = collection(db, 'users', user.uid, 'cloudSessions');
-        const q = query(sessionsRef, orderBy('createdAt', 'desc'), limit(10));
-        const unsub = onSnapshot(q, (snap) => {
-            // Only load persisted sessions on initial load
-        });
-        listeners.push(unsub);
+      updateStats();
+    },
+
+    stopSession: async (sessionId) => {
+      const idx = sessions.findIndex(s => s.sessionId === sessionId);
+      if (idx === -1) return;
+
+      const session = sessions[idx];
+      session.status = 'stopping';
+      renderSessions();
+      addLog(`[${session.envName}] Shutting down session ${sessionId.substring(0, 8)}...`);
+
+      setTimeout(() => {
+        sessions.splice(idx, 1);
+        renderSessions();
+        updateStats();
+        addLog(`[${session.envName}] Session terminated.`);
+      }, 1500);
+
+      if (user) {
+        try { await deleteDoc(doc(db, 'users', user.uid, 'cloudSessions', sessionId)); } catch (e) { }
+      }
+    },
+
+    restartSession: async (sessionId) => {
+      const session = sessions.find(s => s.sessionId === sessionId);
+      if (!session) return;
+      session.status = 'restarting';
+      renderSessions();
+      addLog(`[${session.envName}] Restarting...`);
+      setTimeout(() => {
+        session.status = 'running';
+        session.cpuUsage = Math.floor(Math.random() * 30) + 10;
+        session.ramUsage = Math.floor(Math.random() * 40) + 20;
+        renderSessions();
+        addLog(`[${session.envName}] ✓ Restart complete.`);
+      }, 2000);
+    },
+
+    clearLogs: () => {
+      const logsEl = document.getElementById('cc-logs');
+      if (logsEl) logsEl.innerHTML = '<div style="color: var(--text-muted);">Logs cleared.</div>';
     }
+  };
 
-    // Highlight env cards on hover
-    document.querySelectorAll('.cc-env-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.borderColor = 'var(--border-glow)';
-            card.style.boxShadow = '0 4px 20px var(--glow-orange)';
-            card.style.transform = 'translateY(-2px)';
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.borderColor = 'var(--border-color)';
-            card.style.boxShadow = 'none';
-            card.style.transform = 'translateY(0)';
-        });
+  // Load existing sessions from Firestore
+  if (user) {
+    const sessionsRef = collection(db, 'users', user.uid, 'cloudSessions');
+    const q = query(sessionsRef, orderBy('createdAt', 'desc'), limit(10));
+    const unsub = onSnapshot(q, (snap) => {
+      // Only load persisted sessions on initial load
     });
+    listeners.push(unsub);
+  }
 
-    updateStats();
+  // Highlight env cards on hover
+  document.querySelectorAll('.cc-env-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.borderColor = 'var(--border-glow)';
+      card.style.boxShadow = '0 4px 20px var(--glow-orange)';
+      card.style.transform = 'translateY(-2px)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.borderColor = 'var(--border-color)';
+      card.style.boxShadow = 'none';
+      card.style.transform = 'translateY(0)';
+    });
+  });
+
+  updateStats();
 }
 
 export function destroy() {
-    listeners.forEach(u => u());
-    listeners = [];
-    sessions = [];
-    delete window.cloudView;
+  listeners.forEach(u => u());
+  listeners = [];
+  sessions = [];
+  delete window.cloudView;
 }
 
 function updateStats() {
-    const activeEl = document.getElementById('cc-active');
-    const hoursEl = document.getElementById('cc-total-hours');
-    const cpuEl = document.getElementById('cc-cpu');
-    const ramEl = document.getElementById('cc-ram');
-    const statusDot = document.querySelector('#cc-status-indicator .status-dot');
-    const statusText = document.getElementById('cc-status-text');
+  const activeEl = document.getElementById('cc-active');
+  const hoursEl = document.getElementById('cc-total-hours');
+  const cpuEl = document.getElementById('cc-cpu');
+  const ramEl = document.getElementById('cc-ram');
+  const statusDot = document.querySelector('#cc-status-indicator .status-dot');
+  const statusText = document.getElementById('cc-status-text');
 
-    const running = sessions.filter(s => s.status === 'running');
+  const running = sessions.filter(s => s.status === 'running');
 
-    if (activeEl) activeEl.textContent = running.length;
+  if (activeEl) activeEl.textContent = running.length;
 
-    if (hoursEl) {
-        let totalMs = 0;
-        running.forEach(s => { totalMs += (Date.now() - new Date(s.startedAt).getTime()); });
-        const totalHours = (totalMs / 3600000).toFixed(1);
-        hoursEl.textContent = `${totalHours}h`;
-    }
+  if (hoursEl) {
+    let totalMs = 0;
+    running.forEach(s => { totalMs += (Date.now() - new Date(s.startedAt).getTime()); });
+    const totalHours = (totalMs / 3600000).toFixed(1);
+    hoursEl.textContent = `${totalHours}h`;
+  }
 
-    if (cpuEl) {
-        const avgCpu = running.length > 0 ? Math.round(running.reduce((sum, s) => sum + s.cpuUsage, 0) / running.length) : 0;
-        cpuEl.textContent = `${avgCpu}%`;
-    }
+  if (cpuEl) {
+    const avgCpu = running.length > 0 ? Math.round(running.reduce((sum, s) => sum + s.cpuUsage, 0) / running.length) : 0;
+    cpuEl.textContent = `${avgCpu}%`;
+  }
 
-    if (ramEl) {
-        const avgRam = running.length > 0 ? Math.round(running.reduce((sum, s) => sum + s.ramUsage, 0) / running.length) : 0;
-        ramEl.textContent = `${avgRam}%`;
-    }
+  if (ramEl) {
+    const avgRam = running.length > 0 ? Math.round(running.reduce((sum, s) => sum + s.ramUsage, 0) / running.length) : 0;
+    ramEl.textContent = `${avgRam}%`;
+  }
 
-    if (statusDot) {
-        statusDot.className = `status-dot ${running.length > 0 ? 'active' : 'idle'}`;
-    }
-    if (statusText) {
-        statusText.textContent = running.length > 0 ? `${running.length} active session${running.length > 1 ? 's' : ''}` : 'No active sessions';
-    }
+  if (statusDot) {
+    statusDot.className = `status-dot ${running.length > 0 ? 'active' : 'idle'}`;
+  }
+  if (statusText) {
+    statusText.textContent = running.length > 0 ? `${running.length} active session${running.length > 1 ? 's' : ''}` : 'No active sessions';
+  }
 }
 
 function getElapsedTime(startTime) {
-    const ms = Date.now() - new Date(startTime).getTime();
-    const seconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    if (hours > 0) return `${hours}h ${minutes % 60}m`;
-    if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
-    return `${seconds}s`;
+  const ms = Date.now() - new Date(startTime).getTime();
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  if (hours > 0) return `${hours}h ${minutes % 60}m`;
+  if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
+  return `${seconds}s`;
 }
 
 function renderSessions() {
-    const container = document.getElementById('cc-sessions');
-    if (!container) return;
+  const container = document.getElementById('cc-sessions');
+  if (!container) return;
 
-    if (sessions.length === 0) {
-        container.innerHTML = `
+  if (sessions.length === 0) {
+    container.innerHTML = `
       <div class="empty-state" style="padding: 2rem;">
         <p style="font-size: 0.9rem; color: var(--text-muted);">No active sessions. Launch an environment above to get started.</p>
       </div>
     `;
-        return;
-    }
+    return;
+  }
 
-    container.innerHTML = sessions.map(s => {
-        const statusMap = {
-            'starting': { label: 'Starting...', dot: 'thinking', color: 'var(--badge-amber)' },
-            'running': { label: 'Running', dot: 'active', color: 'var(--badge-teal)' },
-            'stopping': { label: 'Stopping...', dot: 'reflecting', color: 'var(--badge-coral)' },
-            'restarting': { label: 'Restarting...', dot: 'thinking', color: 'var(--badge-amber)' }
-        };
-        const st = statusMap[s.status] || statusMap['running'];
+  container.innerHTML = sessions.map(s => {
+    const statusMap = {
+      'starting': { label: 'Starting...', dot: 'thinking', color: 'var(--badge-amber)' },
+      'running': { label: 'Running', dot: 'active', color: 'var(--badge-teal)' },
+      'stopping': { label: 'Stopping...', dot: 'reflecting', color: 'var(--badge-coral)' },
+      'restarting': { label: 'Restarting...', dot: 'thinking', color: 'var(--badge-amber)' }
+    };
+    const st = statusMap[s.status] || statusMap['running'];
 
-        return `
+    return `
       <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-bottom: 1px solid var(--border-subtle); transition: background 0.15s ease;">
         <div style="display: flex; align-items: center; gap: 1rem; min-width: 0;">
           <div style="font-size: 1.5rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm);">${s.envIcon}</div>
@@ -332,29 +348,29 @@ function renderSessions() {
         </div>
       </div>
     `;
-    }).join('');
+  }).join('');
 }
 
 function addLog(message) {
-    const logsEl = document.getElementById('cc-logs');
-    if (!logsEl) return;
+  const logsEl = document.getElementById('cc-logs');
+  if (!logsEl) return;
 
-    const time = new Date().toLocaleTimeString();
-    const line = document.createElement('div');
-    line.style.animation = 'fadeIn 0.3s ease';
+  const time = new Date().toLocaleTimeString();
+  const line = document.createElement('div');
+  line.style.animation = 'fadeIn 0.3s ease';
 
-    const isSuccess = message.includes('✓');
-    const isError = message.includes('✗') || message.includes('Error');
-    const color = isSuccess ? 'var(--badge-teal)' : isError ? 'var(--badge-coral)' : 'var(--text-secondary)';
+  const isSuccess = message.includes('✓');
+  const isError = message.includes('✗') || message.includes('Error');
+  const color = isSuccess ? 'var(--badge-teal)' : isError ? 'var(--badge-coral)' : 'var(--text-secondary)';
 
-    line.innerHTML = `<span style="color: var(--text-muted);">[${time}]</span> <span style="color: ${color};">${message}</span>`;
+  line.innerHTML = `<span style="color: var(--text-muted);">[${time}]</span> <span style="color: ${color};">${message}</span>`;
 
-    // Remove placeholder
-    const placeholder = logsEl.querySelector('div[style*="text-muted"]');
-    if (placeholder && placeholder.textContent.includes('Waiting')) {
-        logsEl.innerHTML = '';
-    }
+  // Remove placeholder
+  const placeholder = logsEl.querySelector('div[style*="text-muted"]');
+  if (placeholder && placeholder.textContent.includes('Waiting')) {
+    logsEl.innerHTML = '';
+  }
 
-    logsEl.appendChild(line);
-    logsEl.scrollTop = logsEl.scrollHeight;
+  logsEl.appendChild(line);
+  logsEl.scrollTop = logsEl.scrollHeight;
 }

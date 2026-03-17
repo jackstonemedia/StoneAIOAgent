@@ -75,7 +75,7 @@ export async function render() {
         <div id="tv-memory-content" style="height: 180px; padding: 1rem; display: flex; gap: 1rem; overflow-x: auto; align-items: flex-start;">
           
           <!-- Add Insight Button/Form -->
-          <div style="min-width: 250px; background: rgba(255,255,255,0.03); border: 1px dashed var(--border-color); border-radius: 8px; padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer;" id="tv-add-insight-btn">
+          <div style="min-width: 250px; background: rgba(0,0,0,0.03); border: 1px dashed var(--border-color); border-radius: 8px; padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer;" id="tv-add-insight-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             <span style="margin-top: 0.5rem; font-weight: 500;">Add Insight</span>
           </div>

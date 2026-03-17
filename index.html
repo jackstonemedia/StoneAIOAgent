@@ -9,6 +9,7 @@
   <title>Stone AIO — AI Agent Platform</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e8622c' stroke-width='2'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg>" />
+  <link rel="stylesheet" href="/src/css/onboarding.css" />
 </head>
 
 <body>
@@ -36,160 +37,106 @@
       </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="landing-hero">
-      <div class="landing-hero-glow landing-hero-glow-1"></div>
-      <div class="landing-hero-glow landing-hero-glow-2"></div>
-      <div class="landing-hero-glow landing-hero-glow-3"></div>
-      <div class="landing-hero-content">
-        <div class="landing-badge">✦ Built for teams that move fast</div>
-        <h1>AI Agents: Your First<br />Digital Team That<br /><span class="landing-gradient-text">Never Sleeps.</span>
-        </h1>
-        <p class="landing-hero-sub">Hire AI agents today — get your first 24/7 digital team that runs your outreach,
-          content, customer support, and business operations without adding extra headcount.</p>
-        <div class="landing-hero-btns">
-          <button class="landing-cta landing-cta-lg"
-            onclick="document.getElementById('auth-modal').style.display='flex'">Get Started Free →</button>
-          <button class="landing-cta-outline" onclick="document.getElementById('auth-modal').style.display='flex'">Watch
-            Demo</button>
-        </div>
-        <div class="landing-social-proof">
-          <div class="landing-avatars">
-            <div class="landing-avatar" style="background: #e8622c;">J</div>
-            <div class="landing-avatar" style="background: #8b5cf6;">M</div>
-            <div class="landing-avatar" style="background: #14b8a6;">S</div>
-            <div class="landing-avatar" style="background: #f59e0b;">K</div>
+    <!-- HERO (Manus Style) -->
+    <section class="landing-hero-manus">
+      <h1>The AI agent platform<br />that actually works</h1>
+      <p class="landing-subtitle-manus">From internal tools to customer-facing software — deploy production-ready agents
+        in minutes, not months.</p>
+
+      <div class="landing-prompt-manus" onclick="document.getElementById('auth-modal').style.display='flex'">
+        <input type="text" placeholder="Build an internal sales analytics dashboard with CRM data integration."
+          readonly />
+        <button class="landing-prompt-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5" />
+            <path d="M5 12l7-7 7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="landing-tags-manus">
+        <span class="tags-label">What would you like to build?</span>
+        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Email SDR</button>
+        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Content
+          Creator</button>
+        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Voice
+          Caller</button>
+        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Browser
+          Agent</button>
+      </div>
+    </section>
+
+    <!-- CAPABILITIES (Manus Style) -->
+    <section id="section-agents" class="landing-capabilities-manus">
+      <div class="landing-grid-manus">
+        <div class="soft-card reactive-hover capability-card"
+          onclick="document.getElementById('auth-modal').style.display='flex'">
+          <div class="capability-icon" style="background: rgba(37,99,235,0.1); color: #2563eb;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
           </div>
-          <span>Trusted by 2,400+ businesses worldwide</span>
+          <div class="capability-content">
+            <h3>Conversational Builder</h3>
+            <p>Unlimited possibilities through simple conversation. No drag-and-drop templates or limited logic trees.
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- MEET YOUR AI AGENTS -->
-    <section id="section-agents" class="landing-section">
-      <div class="landing-section-header">
-        <div class="landing-section-badge">Your AI Workforce</div>
-        <h2>Meet Your AI Agents — Built<br />for Any Business</h2>
-        <p>Every business is different. Your team should be too. Each AI agent is designed to take ownership of a
-          specific function — so you can stop juggling and start delegating.</p>
-      </div>
-      <div class="landing-agents-grid">
-        <div class="landing-agent-card" style="--accent: #e8622c;">
-          <div class="landing-agent-icon">📧</div>
-          <h3>Email SDR</h3>
-          <span class="landing-agent-role">Outreach Specialist</span>
-          <p>Writes personalized cold emails, handles follow-ups, and optimizes for reply rates across any market.</p>
+        <div class="soft-card reactive-hover capability-card"
+          onclick="document.getElementById('auth-modal').style.display='flex'">
+          <div class="capability-icon" style="background: rgba(139,92,246,0.1); color: #8b5cf6;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <div class="capability-content">
+            <h3>Self-Learning Memory</h3>
+            <p>Every agent run is scored. Low performers evolve their prompts automatically and share insights.</p>
+          </div>
         </div>
-        <div class="landing-agent-card" style="--accent: #8b5cf6;">
-          <div class="landing-agent-icon">✍️</div>
-          <h3>Content Creator</h3>
-          <span class="landing-agent-role">Marketing Specialist</span>
-          <p>Creates blog posts, social captions, newsletters. Learns your brand voice and improves with every piece.
-          </p>
-        </div>
-        <div class="landing-agent-card" style="--accent: #14b8a6;">
-          <div class="landing-agent-icon">📞</div>
-          <h3>Voice Caller</h3>
-          <span class="landing-agent-role">Sales Development</span>
-          <p>AI-powered cold calls via Retell.ai. Books meetings, handles objections, and follows up automatically.</p>
-        </div>
-        <div class="landing-agent-card" style="--accent: #60a5fa;">
-          <div class="landing-agent-icon">🌐</div>
-          <h3>Browser Agent</h3>
-          <span class="landing-agent-role">Cloud Automation</span>
-          <p>Navigates websites, fills forms, scrapes data, and completes multi-step web tasks in the cloud 24/7.</p>
-        </div>
-        <div class="landing-agent-card" style="--accent: #f59e0b;">
-          <div class="landing-agent-icon">🤖</div>
-          <h3>Autonomous Agent</h3>
-          <span class="landing-agent-role">General Purpose</span>
-          <p>Give it a goal and let it figure out the rest. Research, analysis, data processing — it plans and executes.
-          </p>
-        </div>
-        <div class="landing-agent-card" style="--accent: #a78bfa;">
-          <div class="landing-agent-icon">⚙️</div>
-          <h3>Workflow Agent</h3>
-          <span class="landing-agent-role">Process Automation</span>
-          <p>Follows defined step sequences deterministically. Perfect for repeatable processes needing consistency.</p>
-        </div>
-      </div>
-    </section>
 
-    <!-- FEATURES -->
-    <section id="section-features" class="landing-section">
-      <div class="landing-section-header">
-        <div class="landing-section-badge">Platform Features</div>
-        <h2>Employ AI staff to automate<br />work. Even while you sleep.</h2>
-        <p>You don't need hundreds of employees to run a modern business. Stone AIO gives you the best AI agents to
-          automate day-to-day work — continuously, efficiently, and without burnout.</p>
-      </div>
-      <div class="landing-features-grid">
-        <div class="landing-feature-card-wide" style="background: linear-gradient(135deg, #7c3aed, #6d28d9);">
-          <div class="landing-feature-card-blob"></div>
-          <h3>Run agents, score results,<br />improve automatically.</h3>
-          <p>Every agent run is scored. Low performers evolve their prompts, test new strategies, and self-improve via
-            built-in A/B experiments — all automatically.</p>
+        <div class="soft-card reactive-hover capability-card"
+          onclick="document.getElementById('auth-modal').style.display='flex'">
+          <div class="capability-icon" style="background: rgba(245,158,11,0.1); color: #f59e0b;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </div>
+          <div class="capability-content">
+            <h3>Cloud Computer Native</h3>
+            <p>Launch virtual machines with one click to run scrapers, browser automations, and long-running tasks 24/7.
+            </p>
+          </div>
         </div>
-        <div class="landing-feature-card-half" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
-          <div class="landing-feature-card-blob"></div>
-          <h3>Deploy a cloud<br />computer for any task</h3>
-          <p>Launch virtual machines with one click. Run scrapers, browser automations, and long-running tasks — no
-            infrastructure setup.</p>
-        </div>
-        <div class="landing-feature-card-half" style="background: linear-gradient(135deg, #d97706, #b45309);">
-          <div class="landing-feature-card-blob"></div>
-          <h3>Team memory that<br />makes everyone smarter</h3>
-          <p>When one agent discovers what works, the insight is shared across your entire team. Collective intelligence
-            compounds.</p>
-        </div>
-      </div>
-    </section>
 
-    <!-- PRICING -->
-    <section id="section-pricing" class="landing-section">
-      <div class="landing-section-header">
-        <div class="landing-section-badge">Pricing</div>
-        <h2>Simple, transparent pricing.</h2>
-        <p>Start free. Scale when you're ready. No credit card required.</p>
-      </div>
-      <div class="landing-pricing-grid">
-        <div class="landing-price-card">
-          <div class="landing-price-tier">Free</div>
-          <div class="landing-price-amount">$0<span>/mo</span></div>
-          <p class="landing-price-desc">Perfect for getting started with AI agents.</p>
-          <ul class="landing-price-features">
-            <li>5 agents</li>
-            <li>50 runs/day</li>
-            <li>Basic analytics</li>
-            <li>1 cloud session</li>
-          </ul>
-          <button class="landing-cta-outline" style="width: 100%;"
-            onclick="document.getElementById('auth-modal').style.display='flex'">Get Started Free</button>
-        </div>
-        <div class="landing-price-card landing-price-card-featured">
-          <div class="landing-price-popular">Most Popular</div>
-          <div class="landing-price-tier">Pro</div>
-          <div class="landing-price-amount">$49<span>/mo</span></div>
-          <p class="landing-price-desc">For teams serious about AI automation.</p>
-          <ul class="landing-price-features">
-            <li>Unlimited agents</li>
-            <li>Unlimited runs</li>
-            <li>Voice agents + A/B testing</li>
-            <li>10 cloud sessions</li>
-          </ul>
-          <button class="landing-cta" style="width: 100%;"
-            onclick="document.getElementById('auth-modal').style.display='flex'">Upgrade to Pro</button>
+        <div class="soft-card reactive-hover capability-card"
+          onclick="document.getElementById('auth-modal').style.display='flex'">
+          <div class="capability-icon" style="background: rgba(20,184,166,0.1); color: #14b8a6;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+          </div>
+          <div class="capability-content">
+            <h3>Voice Callers</h3>
+            <p>AI-powered cold calls via Retell.ai. Books meetings, handles objections, and follows up automatically.
+            </p>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- FINAL CTA -->
-    <section class="landing-final-cta">
-      <div class="landing-hero-glow landing-hero-glow-1"></div>
-      <h2>Ready to hire your<br />first AI team?</h2>
-      <p>Deploy your first agent in under 2 minutes. No credit card required.</p>
-      <button class="landing-cta landing-cta-lg"
-        onclick="document.getElementById('auth-modal').style.display='flex'">Get Started Free →</button>
+      <div style="text-align: center; margin-top: 4rem;">
+        <button class="landing-cta landing-cta-lg reactive-hover"
+          onclick="document.getElementById('auth-modal').style.display='flex'">Start Building Free</button>
+      </div>
     </section>
 
     <!-- FOOTER -->
@@ -273,71 +220,132 @@
       </div>
 
       <nav class="sidebar-nav">
+        <!-- Home -->
         <a href="#dashboard" class="nav-link active">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="7" height="9" />
-            <rect x="14" y="3" width="7" height="5" />
-            <rect x="14" y="12" width="7" height="9" />
-            <rect x="3" y="16" width="7" height="5" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
-          Dashboard
+          Home
         </a>
+        <!-- Files -->
+        <a href="#files" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+            <polyline points="13 2 13 9 20 9" />
+          </svg>
+          Files
+        </a>
+        <!-- Chats -->
+        <a href="#chats" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          Chats
+        </a>
+        <!-- Agents -->
+        <a href="#agents" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+          </svg>
+          Agents
+        </a>
+        <!-- Space -->
+        <a href="#space" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+            <path d="m12 15-3-3a22 22 0 0 1 3.82-13 1.5 1.5 0 0 0-2.18 2.08A24.47 24.47 0 0 0 12 15z" />
+            <path d="m15 12-3-3a22 22 0 0 0-13 3.82 1.5 1.5 0 0 1 2.08-2.18A24.47 24.47 0 0 1 15 12z" />
+          </svg>
+          Space
+        </a>
+        <!-- Skills -->
+        <a href="#skills" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          Skills
+        </a>
+        <!-- Cloud Computer -->
         <a href="#cloud" class="nav-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
             <line x1="8" y1="21" x2="16" y2="21" />
             <line x1="12" y1="17" x2="12" y2="21" />
           </svg>
           Cloud Computer
         </a>
-        <a href="#agents" class="nav-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3" />
-            <path
-              d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+        <!-- Datasets -->
+        <a href="#datasets" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
           </svg>
-          My Agents
+          Datasets
         </a>
-        <a href="#team" class="nav-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        <!-- System -->
+        <a href="#system" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
           </svg>
-          Team View
+          System
         </a>
-        <a href="#learning" class="nav-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+        <!-- Terminal -->
+        <a href="#terminal" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5" />
+            <line x1="12" y1="19" x2="20" y2="19" />
           </svg>
-          Learning
+          Terminal
         </a>
-        <a href="#experiments" class="nav-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 2v7.31" />
-            <path d="M14 9.3V1.99" />
-            <path d="M8.5 2h7" />
-            <path d="M14 9.3a6.5 6.5 0 1 1-4 0" />
-            <circle cx="12" cy="15" r="2" />
+        <!-- Billing -->
+        <a href="#billing" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+            <line x1="1" y1="10" x2="23" y2="10" />
           </svg>
-          Experiments
+          Billing
         </a>
+        <!-- Marketplace -->
         <a href="#marketplace" class="nav-link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-            <path d="M3 6h18" />
-            <path d="M16 10a4 4 0 0 1-8 0" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
           </svg>
           Marketplace
+        </a>
+        <!-- Bookmarks -->
+        <a href="#bookmarks" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+          </svg>
+          Bookmarks
+        </a>
+        <!-- Settings -->
+        <a href="#settings" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          Settings
         </a>
       </nav>
 

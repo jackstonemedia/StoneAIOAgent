@@ -93,7 +93,7 @@ export async function render() {
                 <button class="btn btn-primary btn-sm" id="btn-run-agent" onclick="window.agentsView.openRunModal('${selectedAgentId}')">Run Now</button>
               </div>
             </div>
-            <pre id="detail-system-prompt" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.875rem;"></pre>
+            <pre id="detail-system-prompt" style="background: rgba(0,0,0,0.03); padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.875rem; border: 1px solid var(--border-color);"></pre>
           </div>
 
           <!-- Run Agent Panel (Hidden by default) -->
@@ -140,7 +140,7 @@ export async function render() {
             <div id="run-active-state" style="display: none; padding: 1rem; text-align: center;">
               <div class="loading-spinner" style="margin-bottom: 1rem;">Processing...</div>
               <h4 id="run-status-text">Generating script and initiating call...</h4>
-              <div id="run-script-preview" style="margin-top: 1rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; font-family: monospace; font-size: 0.85rem; color: var(--text-secondary); text-align: left; white-space: pre-wrap; display: none;"></div>
+              <div id="run-script-preview" style="margin-top: 1rem; background: rgba(0,0,0,0.03); padding: 1rem; border-radius: 8px; font-family: monospace; font-size: 0.85rem; color: var(--text-secondary); text-align: left; white-space: pre-wrap; display: none; border: 1px solid var(--border-color);"></div>
             </div>
           </div>
 
@@ -630,6 +630,24 @@ async function submitVoiceCall() {
       activeState.style.display = 'none';
     }, 3000);
   }
+}
+
+async function submitGeneralRun() {
+  const task = document.getElementById('run-general-task').value;
+  if (!task) {
+    alert("Please enter a task description");
+    return;
+  }
+
+  document.getElementById('run-general-form').style.display = 'none';
+  document.getElementById('run-active-state').style.display = 'block';
+  document.getElementById('run-status-text').textContent = "Executing Multi-Step Plan...";
+
+  setTimeout(() => {
+    document.getElementById('run-script-preview').style.display = 'block';
+    document.getElementById('run-script-preview').textContent = "> Step 1: Analyzing task requirements...\n> Step 2: Extracting parameters...\n> Error: Integration dependencies unlinked.";
+    document.getElementById('run-status-text').textContent = "Execution paused: Missing Integration.";
+  }, 1500);
 }
 
 function openRunModal(agentId) {

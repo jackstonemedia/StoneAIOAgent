@@ -1,0 +1,175 @@
+/* ====================================
+   5-STEP ONBOARDING MIST
+   ==================================== */
+#onboarding-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg-base);
+    /* Pure white/off-white */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+#onboarding-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.onboarding-container {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onboarding-step {
+    position: absolute;
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.98);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.onboarding-step.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Typography matching Manus */
+.onboarding-step h2 {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+.onboarding-step>p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+}
+
+/* Options Grid */
+.onboarding-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 2.5rem;
+}
+
+.onboarding-options.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.onboarding-option {
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.onboarding-option:hover {
+    border-color: #d1d5db;
+    transform: scale(1.02);
+    box-shadow: var(--shadow-sm);
+}
+
+.onboarding-option.selected {
+    border-color: var(--accent-primary);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.onboarding-option-icon {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #f3f4f6;
+    border-radius: 8px;
+}
+
+.onboarding-option-text h4 {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.2rem 0;
+    color: var(--text-primary);
+}
+
+.onboarding-option-text p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Terminal Animation Step */
+.onboarding-terminal {
+    background: #111827;
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    text-align: left;
+    font-family: var(--font-mono);
+    color: #10b981;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.terminal-line {
+    opacity: 0;
+}
+
+/* Progress */
+.onboarding-progress {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    transition: all 0.3s;
+}
+
+.progress-dot.active {
+    background: var(--accent-primary);
+    transform: scale(1.2);
+}
+
+.progress-dot.completed {
+    background: #9ca3af;
+}

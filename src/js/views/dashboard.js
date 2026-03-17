@@ -31,6 +31,22 @@ export async function render() {
         <p style="color: var(--text-secondary); font-size: 0.95rem;">Here's what's happening with your AI agents today.</p>
       </div>
 
+      <!-- Central Prompt Bar -->
+      <div style="margin: 2rem auto 4rem auto; max-width: 720px; text-align: center;">
+        <div class="landing-prompt-manus" style="margin-bottom: 1rem; box-shadow: var(--shadow-sm);">
+          <input type="text" placeholder="What can I do for you?" />
+          <button class="landing-prompt-btn">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          </button>
+        </div>
+        <div class="landing-tags-manus">
+          <span class="tags-label" style="color: var(--text-muted); font-size: 0.8rem;">Suggestions:</span>
+          <button class="tag-btn">Email SDR</button>
+          <button class="tag-btn">Write a Blog</button>
+          <button class="tag-btn">Website Scraper</button>
+        </div>
+      </div>
+
       <!-- Quick Actions -->
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
         <div class="action-card" onclick="window.location.hash='#agents'" style="cursor: pointer;">

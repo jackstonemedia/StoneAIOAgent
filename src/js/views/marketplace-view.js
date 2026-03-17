@@ -74,15 +74,15 @@ export async function render() {
     <div class="marketplace-container" style="padding-bottom: 4rem;">
       
       <!-- HERO -->
-      <div class="hero-section" style="background: linear-gradient(135deg, rgba(88,28,135,0.4) 0%, rgba(15,23,42,1) 100%); padding: 4rem 2rem; border-radius: 16px; margin-bottom: 2rem; text-align: center; border: 1px solid rgba(232, 98, 44, 0.3); position: relative; overflow: hidden;">
-        <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(232, 98, 44, 0.2); filter: blur(60px); border-radius: 50%;"></div>
+      <div class="hero-section" style="background: linear-gradient(135deg, rgba(232, 98, 44, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%); padding: 4rem 2rem; border-radius: var(--radius-lg); margin-bottom: 2rem; text-align: center; border: 1px solid var(--border-color); position: relative; overflow: hidden; box-shadow: var(--shadow-sm);">
+        <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(232, 98, 44, 0.1); filter: blur(60px); border-radius: 50%;"></div>
         <div style="position: absolute; bottom: -50px; right: -50px; width: 200px; height: 200px; background: rgba(56, 189, 248, 0.1); filter: blur(60px); border-radius: 50%;"></div>
         
-        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; position: relative; z-index: 1;">Agent Marketplace</h1>
+        <h1 style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 1rem; position: relative; z-index: 1;">Agent Marketplace</h1>
         <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem auto; position: relative; z-index: 1;">Discover and install top-performing AI agents built by the community. Stop starting from scratch.</p>
         
-        <div style="max-width: 500px; margin: 0 auto; position: relative; z-index: 1;">
-          <input type="text" id="mp-search" class="input" placeholder="Search agents by name, tag, or description..." style="width: 100%; padding: 1rem 1.5rem; border-radius: 30px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); font-size: 1rem;">
+        <div style="max-width: 500px; margin: 0 auto; position: relative; z-index: 1; box-shadow: var(--shadow-sm); border-radius: 30px;">
+          <input type="text" id="mp-search" class="input" placeholder="Search agents by name, tag, or description..." style="width: 100%; padding: 1rem 1.5rem; border-radius: 30px; background: var(--bg-surface); border: 1px solid var(--border-color); font-size: 1rem;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; right: 20px; top: 16px; color: var(--text-secondary);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </div>
       </div>

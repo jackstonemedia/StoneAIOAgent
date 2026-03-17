@@ -5,6 +5,7 @@ import { initToast } from './components/toast.js';
 import { initNotifications } from './components/notifications.js';
 import { initUsageBar } from './components/usage-bar.js';
 import { initRunModal } from './components/run-modal.js';
+import { OnboardingFlow } from './onboarding.js';
 
 let currentUser = null;
 let initialized = false;
@@ -51,10 +52,8 @@ async function initApp() {
   const guestBtn = document.getElementById('guest-btn');
   if (guestBtn) {
     guestBtn.addEventListener('click', () => {
-      // Guest mode auto-initializes the router
       if (!initialized) {
-        initRouter();
-        initialized = true;
+        OnboardingFlow.start();
       }
     });
   }
@@ -66,9 +65,15 @@ async function initApp() {
       initUsageBar();
       initRunModal();
       if (!initialized) {
-        initRouter();
-        initialized = true;
+        OnboardingFlow.start();
       }
+    }
+  });
+
+  document.addEventListener('onboardingComplete', () => {
+    if (!initialized) {
+      initRouter();
+      initialized = true;
     }
   });
 }
