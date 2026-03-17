@@ -74,8 +74,8 @@ export async function render() {
     <div class="marketplace-container" style="padding-bottom: 4rem;">
       
       <!-- HERO -->
-      <div class="hero-section" style="background: linear-gradient(135deg, rgba(88,28,135,0.4) 0%, rgba(15,23,42,1) 100%); padding: 4rem 2rem; border-radius: 16px; margin-bottom: 2rem; text-align: center; border: 1px solid rgba(124, 58, 237, 0.3); position: relative; overflow: hidden;">
-        <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(124, 58, 237, 0.2); filter: blur(60px); border-radius: 50%;"></div>
+      <div class="hero-section" style="background: linear-gradient(135deg, rgba(88,28,135,0.4) 0%, rgba(15,23,42,1) 100%); padding: 4rem 2rem; border-radius: 16px; margin-bottom: 2rem; text-align: center; border: 1px solid rgba(232, 98, 44, 0.3); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(232, 98, 44, 0.2); filter: blur(60px); border-radius: 50%;"></div>
         <div style="position: absolute; bottom: -50px; right: -50px; width: 200px; height: 200px; background: rgba(56, 189, 248, 0.1); filter: blur(60px); border-radius: 50%;"></div>
         
         <h1 style="font-size: 2.5rem; margin-bottom: 1rem; position: relative; z-index: 1;">Agent Marketplace</h1>
@@ -128,8 +128,8 @@ export async function render() {
       </div>
       
       <!-- PUBLISH CTA -->
-      <div style="margin-top: 4rem; padding: 3rem 2rem; background: var(--card-bg); border: 1px dashed var(--border-color); border-radius: 16px; text-align: center;">
-        <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: rgba(124, 58, 237, 0.1); color: var(--accent-purple); margin-bottom: 1rem;">
+      <div style="margin-top: 4rem; padding: 3rem 2rem; background: var(--bg-card); border: 1px dashed var(--border-color); border-radius: 16px; text-align: center;">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: rgba(232, 98, 44, 0.1); color: var(--accent-purple); margin-bottom: 1rem;">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
         </div>
         <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Publish Your Agent</h3>
@@ -253,7 +253,7 @@ function createCardHTML(t, isFeatured = false) {
   const goldBadge = isFeatured ? `<div class="badge" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3);">Featured</div>` : '';
 
   return `
-    <div class="card mp-card" style="display:flex; flex-direction:column; justify-content:space-between; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: 1px solid ${isFeatured ? 'rgba(124, 58, 237, 0.5)' : 'var(--border-color)'}; border-radius: 12px; height: 100%;" data-id="${t.id}">
+    <div class="card mp-card" style="display:flex; flex-direction:column; justify-content:space-between; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: 1px solid ${isFeatured ? 'rgba(232, 98, 44, 0.5)' : 'var(--border-color)'}; border-radius: 12px; height: 100%;" data-id="${t.id}">
       <div style="padding: 1.5rem;">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 1rem;">
           <span class="badge badge-purple">${t.type}</span>
@@ -389,7 +389,7 @@ function showTemplateDetails(id) {
   document.getElementById('mp-detail-metric').textContent = t.defaultPrimaryMetric;
   document.getElementById('mp-detail-prompt').textContent = t.baseSystemPrompt;
 
-  const tagsHtml = t.tags.map(tag => `<span class="badge" style="background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); color: #c4b5fd;">${tag}</span>`).join('');
+  const tagsHtml = t.tags.map(tag => `<span class="badge" style="background: rgba(232, 98, 44, 0.1); border: 1px solid rgba(232, 98, 44, 0.3); color: #c4b5fd;">${tag}</span>`).join('');
   document.getElementById('mp-detail-tags').innerHTML = tagsHtml;
 
   document.getElementById('mp-detail-modal').style.display = 'flex';
@@ -465,7 +465,7 @@ async function finalizeInstall() {
 
 const style = document.createElement('style');
 style.textContent = `
-  .mp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.3); border-color: rgba(124, 58, 237, 0.4); }
+  .mp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.3); border-color: rgba(232, 98, 44, 0.4); }
   .mp-filter.active { background: var(--accent-purple); border-color: var(--accent-purple); color: white; }
 `;
 document.head.appendChild(style);

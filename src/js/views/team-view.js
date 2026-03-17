@@ -13,7 +13,7 @@ export async function render() {
     <div class="team-view-container" style="display: flex; flex-direction: column; height: calc(100vh - 80px); overflow: hidden;">
       
       <!-- TOP: Team Health Bar -->
-      <div class="team-health-bar" style="display: flex; border-top: 2px solid var(--accent-purple); background: var(--card-bg); border-bottom: 1px solid var(--border-color); padding: 1rem;">
+      <div class="team-health-bar" style="display: flex; border-top: 2px solid var(--accent-purple); background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 1rem;">
         <div style="flex: 1; text-align: center; border-right: 1px solid var(--border-color);">
           <div style="font-size: 0.85rem; color: var(--text-secondary);">Agents Online</div>
           <div id="tv-agents-online" style="font-size: 1.5rem; font-weight: 600;">0</div>
@@ -61,7 +61,7 @@ export async function render() {
       </div>
 
       <!-- BOTTOM: Team Memory Panel (Collapsible) -->
-      <div class="team-memory-panel" style="background: var(--card-bg); border-top: 1px solid var(--border-color); transition: height 0.3s ease; display: flex; flex-direction: column;">
+      <div class="team-memory-panel" style="background: var(--bg-card); border-top: 1px solid var(--border-color); transition: height 0.3s ease; display: flex; flex-direction: column;">
         <div style="padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
           <h4 style="margin: 0; display: flex; align-items: center; gap: 0.5rem;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
@@ -297,7 +297,7 @@ function renderWorkstations() {
   let html = '';
   agentsData.forEach(agent => {
     const isActive = agent.status === 'running';
-    const borderStyle = isActive ? 'border: 1px solid var(--accent-purple); box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);' : 'border: 1px solid var(--border-color);';
+    const borderStyle = isActive ? 'border: 1px solid var(--accent-purple); box-shadow: 0 0 10px rgba(232, 98, 44, 0.2);' : 'border: 1px solid var(--border-color);';
 
     // Status visual
     let statusDot = 'bg-gray-500';

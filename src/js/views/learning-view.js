@@ -9,7 +9,7 @@ let currentAgent = null;
 export async function renderLearningView(uid, agentId, container) {
   currentUid = uid;
   currentAgentId = agentId;
-  
+
   const agentRef = doc(db, 'users', uid, 'agents', agentId);
   const agentSnap = await getDoc(agentRef);
   if (!agentSnap.exists()) return;
@@ -40,7 +40,7 @@ export async function renderLearningView(uid, agentId, container) {
       btn.style.color = 'var(--text-primary)';
       btn.style.borderBottom = '2px solid var(--badge-purple)';
       btn.style.fontWeight = '600';
-      
+
       loadTab(btn.dataset.tab);
     });
   });
@@ -59,7 +59,7 @@ export async function renderLearningView(uid, agentId, container) {
 async function loadTab(tabName) {
   const content = document.getElementById('learning-content');
   content.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">Loading...</div>';
-  
+
   try {
     if (tabName === 'performance') await renderPerformance(content);
     else if (tabName === 'strategies') await renderStrategies(content);
@@ -79,21 +79,21 @@ async function renderPerformance(container) {
   const runsRef = collection(db, 'users', currentUid, 'agents', currentAgentId, 'runs');
   const q = query(runsRef, where('primaryScore', '!=', null), orderBy('primaryScore'), orderBy('createdAt', 'desc'));
   const snap = await getDocs(q);
-  
+
   let runs = snap.docs.map(d => d.data());
   runs.sort((a, b) => {
     const ta = a.createdAt ? a.createdAt.toMillis() : 0;
     const tb = b.createdAt ? b.createdAt.toMillis() : 0;
     return ta - tb; // ascending
   });
-  
+
   // Take last 50
   runs = runs.slice(-50);
 
   let bestScore = 0;
   let totalScoreLast10 = 0;
   let countLast10 = 0;
-  
+
   runs.forEach((r, i) => {
     const s = r.weightedScore || r.primaryScore || 0;
     if (s > bestScore) bestScore = s;
@@ -102,7 +102,7 @@ async function renderPerformance(container) {
       countLast10++;
     }
   });
-  
+
   const avgLast10 = countLast10 > 0 ? (totalScoreLast10 / countLast10).toFixed(1) : '-';
   const totalRuns = currentAgent.totalRuns || 0;
 
@@ -128,7 +128,7 @@ async function renderPerformance(container) {
       <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1rem; font-weight: 600;">Performance History (Last 50 Scored Runs)</h3>
       <div style="position: relative; width: 100%; height: 240px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--border-color);">
         <canvas id="performance-chart" style="width: 100%; height: 100%; display: block;"></canvas>
-        <div id="chart-tooltip" style="position: absolute; display: none; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 0.5rem; border-radius: 4px; font-size: 0.75rem; color: var(--text-primary); pointer-events: none; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5); white-space: nowrap;"></div>
+        <div id="chart-tooltip" style="position: absolute; display: none; background: var(--bg-surface); border: 1px solid var(--border-color); padding: 0.5rem; border-radius: 4px; font-size: 0.75rem; color: var(--text-primary); pointer-events: none; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5); white-space: nowrap;"></div>
       </div>
       
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
@@ -225,7 +225,7 @@ function drawChart(canvas, runs, avgScore) {
 
     // Clear and redraw grid
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Redraw grid (simplified for animation)
     ctx.strokeStyle = 'rgba(255,255,255,0.1)';
     ctx.lineWidth = 1;
@@ -246,7 +246,7 @@ function drawChart(canvas, runs, avgScore) {
     const drawCount = Math.floor(progress * points.length);
     for (let i = 0; i < drawCount - 1; i++) {
       const p1 = points[i];
-      const p2 = points[i+1];
+      const p2 = points[i + 1];
       ctx.beginPath();
       ctx.moveTo(p1.x, p1.y);
       ctx.lineTo(p2.x, p2.y);
@@ -268,7 +268,7 @@ function drawChart(canvas, runs, avgScore) {
       requestAnimationFrame(animate);
     }
   };
-  
+
   requestAnimationFrame(animate);
 
   // Tooltip
@@ -309,14 +309,14 @@ function showDiffModal(oldText, newText) {
   // Simple line-by-line diff
   const oldLines = oldText.split('\n');
   const newLines = newText.split('\n');
-  
+
   let diffHtml = '';
   const maxLines = Math.max(oldLines.length, newLines.length);
-  
+
   for (let i = 0; i < maxLines; i++) {
     const o = oldLines[i] !== undefined ? oldLines[i] : null;
     const n = newLines[i] !== undefined ? newLines[i] : null;
-    
+
     if (o === n) {
       diffHtml += `<div style="color: var(--text-secondary); padding: 2px 8px;">  ${escapeHtml(o)}</div>`;
     } else {
@@ -333,7 +333,7 @@ function showDiffModal(oldText, newText) {
   modal.style.display = 'flex';
   modal.style.alignItems = 'center';
   modal.style.justifyContent = 'center';
-  
+
   modal.innerHTML = `
     <div class="card" style="width: 800px; max-width: 90vw; max-height: 90vh; display: flex; flexDirection: column; background: var(--bg-primary);">
       <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
@@ -349,9 +349,9 @@ function showDiffModal(oldText, newText) {
       </div>
     </div>
   `;
-  
+
   document.body.appendChild(modal);
-  
+
   document.getElementById('btn-reject-prompt').addEventListener('click', async () => {
     try {
       await updateDoc(doc(db, 'users', currentUid, 'agents', currentAgentId), { proposedSystemPrompt: null, needsPromptApproval: false });
@@ -363,13 +363,13 @@ function showDiffModal(oldText, newText) {
       if (window.showToast) window.showToast('Failed to reject changes.', 'error');
     }
   });
-  
+
   document.getElementById('btn-approve-prompt').addEventListener('click', async () => {
     try {
-      await updateDoc(doc(db, 'users', currentUid, 'agents', currentAgentId), { 
+      await updateDoc(doc(db, 'users', currentUid, 'agents', currentAgentId), {
         systemPrompt: newText,
-        proposedSystemPrompt: null, 
-        needsPromptApproval: false 
+        proposedSystemPrompt: null,
+        needsPromptApproval: false
       });
       if (window.showToast) window.showToast('System prompt updated successfully.', 'success');
       modal.remove();
@@ -399,9 +399,9 @@ async function renderStrategies(container) {
   const stratRef = collection(db, 'users', currentUid, 'agents', currentAgentId, 'strategies');
   const q = query(stratRef, orderBy('averageScore', 'desc'));
   const snap = await getDocs(q);
-  
+
   const strategies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  
+
   let html = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
       <h3 style="margin: 0; font-size: 1rem; font-weight: 600;">Active Strategies</h3>
@@ -430,7 +430,7 @@ async function renderStrategies(container) {
     
     <div style="display: flex; flex-direction: column; gap: 1rem;">
   `;
-  
+
   if (strategies.length === 0) {
     html += `<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No strategies defined yet.</div>`;
   } else {
@@ -441,14 +441,14 @@ async function renderStrategies(container) {
       let confColor = 'var(--badge-coral)';
       if (runCount >= 20) { conf = 'High'; confColor = 'var(--badge-teal)'; }
       else if (runCount >= 5) { conf = 'Med'; confColor = 'var(--badge-amber)'; }
-      
+
       let badgeColor = s.status === 'active' ? 'var(--badge-teal)' : 'var(--badge-gray)';
-      
+
       html += `
         <div class="card" style="padding: 1rem; border-left: 4px solid ${badgeColor};">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
             <div style="display: flex; align-items: center; gap: 1rem;">
-              <span style="font-size: 1.25rem; font-weight: 700; color: var(--text-secondary);">#${i+1}</span>
+              <span style="font-size: 1.25rem; font-weight: 700; color: var(--text-secondary);">#${i + 1}</span>
               <h4 style="margin: 0; font-size: 1rem;">${s.name || 'Unnamed Strategy'}</h4>
               <span class="badge" style="background: transparent; border-color: ${badgeColor}; color: ${badgeColor};">${s.status || 'active'}</span>
             </div>
@@ -485,15 +485,15 @@ async function renderStrategies(container) {
       `;
     });
   }
-  
+
   html += `</div>`;
   container.innerHTML = html;
-  
+
   window.learningView.toggleStratConfig = (id) => {
     const el = document.getElementById(`strat-config-${id}`);
     el.style.display = el.style.display === 'none' ? 'block' : 'none';
   };
-  
+
   window.learningView.archiveStrat = async (id) => {
     if (!confirm('Are you sure you want to archive this strategy?')) return;
     try {
@@ -522,19 +522,19 @@ async function renderStrategies(container) {
       if (window.showToast) window.showToast('Failed to update strategy name', 'error');
     }
   };
-  
+
   const saveBtn = document.getElementById('btn-save-strat');
   if (saveBtn) {
     saveBtn.addEventListener('click', async () => {
       const name = document.getElementById('strat-name').value;
       const desc = document.getElementById('strat-desc').value;
       const config = document.getElementById('strat-config').value;
-      
+
       if (!name) return alert('Name required');
-      
+
       saveBtn.textContent = 'Saving...';
       saveBtn.disabled = true;
-      
+
       try {
         await collection(db, 'users', currentUid, 'agents', currentAgentId, 'strategies').add({
           name,
@@ -565,7 +565,7 @@ async function renderStrategies(container) {
 
 async function renderExamples(container) {
   container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">Loading examples...</div>`;
-  
+
   let examples = [];
   try {
     const res = await api.getExamples({ agentId: currentAgentId, limit: 20 });
@@ -575,7 +575,7 @@ async function renderExamples(container) {
     container.innerHTML = `<div style="color: var(--badge-coral); padding: 1rem;">Failed to fetch examples from vector database.</div>`;
     return;
   }
-  
+
   let html = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
       <h3 style="margin: 0; font-size: 1rem; font-weight: 600;">High-Performing Examples</h3>
@@ -585,7 +585,7 @@ async function renderExamples(container) {
     </div>
     <div style="display: flex; flex-direction: column; gap: 1rem;">
   `;
-  
+
   if (examples.length === 0) {
     html += `<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No examples found. Score some runs > 80 to automatically add them here.</div>`;
   } else {
@@ -594,9 +594,9 @@ async function renderExamples(container) {
       let scoreColor = 'var(--badge-teal)';
       if (score < 75) scoreColor = 'var(--badge-amber)';
       if (score < 50) scoreColor = 'var(--badge-coral)';
-      
+
       const isPinned = (currentAgent.pinnedExampleIds || []).includes(ex.id);
-      
+
       html += `
         <div class="card" style="padding: 1rem; border: 1px solid ${isPinned ? 'var(--badge-purple)' : 'var(--border-color)'};">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
@@ -625,10 +625,10 @@ async function renderExamples(container) {
       `;
     });
   }
-  
+
   html += `</div>`;
   container.innerHTML = html;
-  
+
   window.learningView.toggleExample = (id) => {
     const el = document.getElementById(`example-full-${id}`);
     el.style.display = el.style.display === 'none' ? 'block' : 'none';
@@ -649,7 +649,7 @@ async function renderExamples(container) {
   window.learningView.useExampleAsTemplate = (id) => {
     const ex = examples.find(e => e.id === id);
     if (!ex) return;
-    
+
     // Switch to overview tab and open builder in edit mode
     // We can't directly populate the builder from here easily without modifying agents.js
     // But we can copy the task description to clipboard for now
@@ -669,9 +669,9 @@ async function renderReflections(container) {
   const refRef = collection(db, 'users', currentUid, 'agents', currentAgentId, 'reflections');
   const q = query(refRef, where('status', '==', 'pending'), orderBy('createdAt', 'desc'));
   const snap = await getDocs(q);
-  
+
   const reflections = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  
+
   let html = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
       <h3 style="margin: 0; font-size: 1rem; font-weight: 600;">Pending Reflections</h3>
@@ -679,13 +679,13 @@ async function renderReflections(container) {
     </div>
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
   `;
-  
+
   if (reflections.length === 0) {
     html += `<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No pending reflections. Trigger one to have the agent analyze its recent performance.</div>`;
   } else {
     reflections.forEach(ref => {
       const dateStr = ref.createdAt?.toDate ? new Date(ref.createdAt.toDate()).toLocaleString() : 'Unknown';
-      
+
       let changesHtml = (ref.proposedChanges || []).map((c, i) => `
         <div class="card" style="background: rgba(0,0,0,0.2); padding: 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--badge-purple);">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
@@ -700,7 +700,7 @@ async function renderReflections(container) {
           <div style="font-size: 0.8125rem; color: var(--text-secondary); font-style: italic;">Reasoning: ${escapeHtml(c.reasoning)}</div>
         </div>
       `).join('');
-      
+
       html += `
         <div class="card" style="padding: 1.5rem; border-color: var(--badge-purple);">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
@@ -717,10 +717,10 @@ async function renderReflections(container) {
       `;
     });
   }
-  
+
   html += `</div>`;
   container.innerHTML = html;
-  
+
   const triggerBtn = document.getElementById('btn-trigger-reflect');
   if (triggerBtn) {
     triggerBtn.addEventListener('click', async () => {
@@ -737,14 +737,14 @@ async function renderReflections(container) {
       }
     });
   }
-  
+
   window.learningView.applyRef = async (refId) => {
     const checkboxes = document.querySelectorAll(`.approve-change-cb[data-refid="${refId}"]`);
     const approvedChangeIds = [];
     checkboxes.forEach(cb => {
       if (cb.checked) approvedChangeIds.push(parseInt(cb.dataset.idx));
     });
-    
+
     if (approvedChangeIds.length === 0) {
       // Just mark it approved with no changes
       try {
@@ -756,7 +756,7 @@ async function renderReflections(container) {
         return;
       }
     }
-    
+
     try {
       if (window.showToast) window.showToast('Applying changes...', 'info');
       await api.applyReflection({ agentId: currentAgentId, reflectionId: refId, approvedChangeIds });

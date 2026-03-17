@@ -9,7 +9,7 @@ export async function renderVersionHistory(uid, agentId, container) {
     const versionsRef = collection(db, 'users', uid, 'agents', agentId, 'versions');
     const q = query(versionsRef, orderBy('createdAt', 'desc'), limit(10));
     const snap = await getDocs(q);
-    
+
     const versions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
     if (versions.length === 0) {
@@ -33,12 +33,12 @@ export async function renderVersionHistory(uid, agentId, container) {
 
       html += `
         <div class="card" style="position: relative; z-index: 1; margin-left: 40px; padding: 1rem; border-color: ${isLatest ? 'var(--badge-teal)' : 'var(--border-color)'};">
-          <div style="position: absolute; left: -33px; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: ${isLatest ? 'var(--badge-teal)' : 'var(--bg-secondary)'}; border: 2px solid ${isLatest ? 'var(--bg-primary)' : 'var(--border-color)'};"></div>
+          <div style="position: absolute; left: -33px; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: ${isLatest ? 'var(--badge-teal)' : 'var(--bg-surface)'}; border: 2px solid ${isLatest ? 'var(--bg-primary)' : 'var(--border-color)'};"></div>
           
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
             <div>
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-weight: 600; font-size: 1rem;">Version ${v.versionId.substring(0,8)}</span>
+                <span style="font-weight: 600; font-size: 1rem;">Version ${v.versionId.substring(0, 8)}</span>
                 ${isLatest ? '<span class="badge badge-teal">Current</span>' : ''}
               </div>
               <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">${dateStr}</div>

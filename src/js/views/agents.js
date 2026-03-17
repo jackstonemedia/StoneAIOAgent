@@ -360,7 +360,7 @@ async function loadAgents() {
 
     if (currentAgents.length === 0) {
       container.innerHTML = `
-        <div style="text-align: center; padding: 4rem 2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem;">
+        <div style="text-align: center; padding: 4rem 2rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 1rem;">
           <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1.5rem; opacity: 0.5;">
             <circle cx="12" cy="12" r="10"></circle>
             <circle cx="12" cy="12" r="4"></circle>

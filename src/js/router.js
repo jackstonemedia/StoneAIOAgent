@@ -1,8 +1,9 @@
 const routes = {
   'dashboard': { title: 'Dashboard', module: () => import('./views/dashboard.js') },
+  'cloud': { title: 'Cloud Computer', module: () => import('./views/cloud-computer.js') },
   'agents': { title: 'My Agents', module: () => import('./views/agents.js') },
   'team': { title: 'Team View', module: () => import('./views/team-view.js') },
-  'learning': { title: 'Learning', module: () => import('./views/learning.js') },
+  'learning': { title: 'Learning', module: () => import('./views/learning-view.js') },
   'experiments': { title: 'Experiments', module: () => import('./views/experiments.js') },
   'marketplace': { title: 'Marketplace', module: () => import('./views/marketplace-view.js') }
 };

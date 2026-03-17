@@ -53,17 +53,17 @@ export async function render() {
         
         <div class="form-group">
           <label class="form-label">Target Agent</label>
-          <select id="exp-agent" class="form-input"></select>
+          <select id="exp-agent" class="form-control"></select>
         </div>
         
         <div class="form-group">
           <label class="form-label">Experiment Name</label>
-          <input type="text" id="exp-name" class="form-input" placeholder="e.g., Tone test: Professional vs Casual">
+          <input type="text" id="exp-name" class="form-control" placeholder="e.g., Tone test: Professional vs Casual">
         </div>
 
         <div class="form-group">
           <label class="form-label">Hypothesis</label>
-          <textarea id="exp-hypothesis" class="form-input" rows="2" placeholder="e.g., A more casual tone will result in higher user engagement scores."></textarea>
+          <textarea id="exp-hypothesis" class="form-control" rows="2" placeholder="e.g., A more casual tone will result in higher user engagement scores."></textarea>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
@@ -71,11 +71,11 @@ export async function render() {
             <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: var(--badge-teal);">Variant A</h4>
             <div class="form-group">
               <label class="form-label">Description</label>
-              <input type="text" id="exp-desc-a" class="form-input" placeholder="Professional tone">
+              <input type="text" id="exp-desc-a" class="form-control" placeholder="Professional tone">
             </div>
             <div class="form-group">
               <label class="form-label">Prompt Snippet (Appended)</label>
-              <textarea id="exp-prompt-a" class="form-input" rows="3" placeholder="Maintain a strictly professional and formal tone at all times."></textarea>
+              <textarea id="exp-prompt-a" class="form-control" rows="3" placeholder="Maintain a strictly professional and formal tone at all times."></textarea>
             </div>
           </div>
           
@@ -83,18 +83,18 @@ export async function render() {
             <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: var(--badge-amber);">Variant B</h4>
             <div class="form-group">
               <label class="form-label">Description</label>
-              <input type="text" id="exp-desc-b" class="form-input" placeholder="Casual tone">
+              <input type="text" id="exp-desc-b" class="form-control" placeholder="Casual tone">
             </div>
             <div class="form-group">
               <label class="form-label">Prompt Snippet (Appended)</label>
-              <textarea id="exp-prompt-b" class="form-input" rows="3" placeholder="Use a casual, friendly, and conversational tone. Use emojis occasionally."></textarea>
+              <textarea id="exp-prompt-b" class="form-control" rows="3" placeholder="Use a casual, friendly, and conversational tone. Use emojis occasionally."></textarea>
             </div>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Target Runs Per Variant</label>
-          <input type="number" id="exp-target-runs" class="form-input" value="30" min="5" max="100">
+          <input type="number" id="exp-target-runs" class="form-control" value="30" min="5" max="100">
           <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Minimum runs required before checking for statistical significance.</div>
         </div>
 
@@ -123,11 +123,11 @@ export async function init() {
       document.getElementById('exp-desc-b').value = '';
       document.getElementById('exp-prompt-b').value = '';
       document.getElementById('exp-target-runs').value = '30';
-      
+
       if (prefillAgentId) {
         document.getElementById('exp-agent').value = prefillAgentId;
       }
-      
+
       document.getElementById('new-experiment-modal').style.display = 'flex';
     },
     submitExperiment: async () => {
@@ -202,9 +202,9 @@ async function loadAgentsForDropdown(uid) {
     const snap = await getDocs(agentsRef);
     const select = document.getElementById('exp-agent');
     if (!select) return;
-    
+
     select.innerHTML = snap.docs.map(d => `<option value="${d.id}">${escapeHtml(d.data().name)}</option>`).join('');
-    
+
     // Check for suggested experiments
     const suggested = snap.docs.filter(d => d.data().suggestExperiment);
     const bannerContainer = document.getElementById('suggested-experiments-container');
@@ -232,7 +232,7 @@ async function loadAgentsForDropdown(uid) {
 function setupExperimentsListener(uid) {
   const expRef = collection(db, 'users', uid, 'experiments');
   const q = query(expRef, orderBy('createdAt', 'desc'));
-  
+
   unsubscribe = onSnapshot(q, (snap) => {
     const tbody = document.getElementById('experiments-table-body');
     if (!tbody) return;
@@ -244,7 +244,7 @@ function setupExperimentsListener(uid) {
 
     tbody.innerHTML = snap.docs.map(docSnap => {
       const exp = { id: docSnap.id, ...docSnap.data() };
-      
+
       let statusHtml = '';
       if (exp.status === 'active') {
         statusHtml = `<div style="display: flex; align-items: center; gap: 0.5rem;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--badge-blue); box-shadow: 0 0 8px var(--badge-blue);"></div> Active</div>`;
@@ -254,9 +254,9 @@ function setupExperimentsListener(uid) {
         statusHtml = `<div style="display: flex; align-items: center; gap: 0.5rem;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--text-secondary);"></div> Paused</div>`;
       }
 
-      const meanA = exp.scoresA && exp.scoresA.length > 0 ? (exp.scoresA.reduce((a,b)=>a+b,0)/exp.scoresA.length).toFixed(1) : '-';
-      const meanB = exp.scoresB && exp.scoresB.length > 0 ? (exp.scoresB.reduce((a,b)=>a+b,0)/exp.scoresB.length).toFixed(1) : '-';
-      
+      const meanA = exp.scoresA && exp.scoresA.length > 0 ? (exp.scoresA.reduce((a, b) => a + b, 0) / exp.scoresA.length).toFixed(1) : '-';
+      const meanB = exp.scoresB && exp.scoresB.length > 0 ? (exp.scoresB.reduce((a, b) => a + b, 0) / exp.scoresB.length).toFixed(1) : '-';
+
       const progressA = Math.min(100, Math.round(((exp.currentRunsA || 0) / exp.targetRunsPerVariant) * 100));
       const progressB = Math.min(100, Math.round(((exp.currentRunsB || 0) / exp.targetRunsPerVariant) * 100));
       const overallProgress = Math.round((progressA + progressB) / 2);
@@ -277,7 +277,7 @@ function setupExperimentsListener(uid) {
         const max = Math.max(...buckets, 1);
         return `
           <div style="display: flex; align-items: flex-end; gap: 2px; height: 40px; margin-top: 0.5rem;">
-            ${buckets.map(b => `<div style="flex: 1; background: ${color}; opacity: ${b/max || 0.1}; height: ${Math.max(5, (b/max)*100)}%; border-radius: 2px 2px 0 0;"></div>`).join('')}
+            ${buckets.map(b => `<div style="flex: 1; background: ${color}; opacity: ${b / max || 0.1}; height: ${Math.max(5, (b / max) * 100)}%; border-radius: 2px 2px 0 0;"></div>`).join('')}
           </div>
         `;
       };
@@ -291,7 +291,7 @@ function setupExperimentsListener(uid) {
           <td style="font-family: var(--font-mono); color: var(--badge-amber);">${meanB}</td>
           <td>
             <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <div style="flex: 1; height: 4px; background: var(--bg-secondary); border-radius: 2px; overflow: hidden;">
+              <div style="flex: 1; height: 4px; background: var(--bg-surface); border-radius: 2px; overflow: hidden;">
                 <div style="height: 100%; width: ${overallProgress}%; background: var(--text-primary);"></div>
               </div>
               <span style="font-size: 0.75rem; color: var(--text-secondary);">${overallProgress}%</span>
@@ -338,9 +338,9 @@ function setupExperimentsListener(uid) {
 
             <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05);">
               <div style="font-size: 0.875rem; color: var(--text-secondary);">
-                ${exp.status === 'completed' 
-                  ? `Statistical significance reached (t-stat: ${exp.tStat?.toFixed(2)}). Variant ${exp.winnerId} outperformed.` 
-                  : `Waiting for more data to determine statistical significance.`}
+                ${exp.status === 'completed'
+          ? `Statistical significance reached (t-stat: ${exp.tStat?.toFixed(2)}). Variant ${exp.winnerId} outperformed.`
+          : `Waiting for more data to determine statistical significance.`}
               </div>
               <div style="display: flex; gap: 0.5rem;">
                 ${exp.status === 'active' ? `<button class="btn btn-sm btn-secondary" onclick="window.experimentsView.checkSignificance('${exp.id}')">Check Significance Now</button>` : ''}
