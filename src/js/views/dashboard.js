@@ -2,15 +2,66 @@ import { getCurrentUser } from '../app.js';
 import { getUser, listAgents, listPendingReflections } from '../db-helpers.js';
 import { db } from '../firebase.js';
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
+import { isGuestMode } from '../auth.js';
 
 let refreshInterval;
 let runListeners = [];
 let allRuns = [];
 let dashAgents = [];
 
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good morning';
+  if (hour < 17) return 'Good afternoon';
+  return 'Good evening';
+}
+
 export async function render() {
+  const user = getCurrentUser();
+  const displayName = user?.displayName?.split(' ')[0] || (isGuestMode() ? 'Explorer' : 'there');
+
   return `
     <div class="dashboard-container">
+      <!-- Welcome Header -->
+      <div style="margin-bottom: 2rem;">
+        <h1 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem;">
+          ${getGreeting()}, <span style="background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${displayName}</span>
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">Here's what's happening with your AI agents today.</p>
+      </div>
+
+      <!-- Quick Actions -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div class="action-card" onclick="window.location.hash='#agents'" style="cursor: pointer;">
+          <div class="action-icon" style="background: rgba(232, 98, 44, 0.12); color: #e8622c; font-size: 1.3rem;">🚀</div>
+          <div class="action-content">
+            <h4>Run an Agent</h4>
+            <p>Execute a task instantly</p>
+          </div>
+        </div>
+        <div class="action-card" onclick="window.location.hash='#agents'" style="cursor: pointer;">
+          <div class="action-icon" style="background: rgba(139, 92, 246, 0.12); color: #8b5cf6; font-size: 1.3rem;">✨</div>
+          <div class="action-content">
+            <h4>Create Agent</h4>
+            <p>Build a new AI worker</p>
+          </div>
+        </div>
+        <div class="action-card" onclick="window.location.hash='#team'" style="cursor: pointer;">
+          <div class="action-icon" style="background: rgba(20, 184, 166, 0.12); color: #14b8a6; font-size: 1.3rem;">👥</div>
+          <div class="action-content">
+            <h4>Team View</h4>
+            <p>Monitor your team live</p>
+          </div>
+        </div>
+        <div class="action-card" onclick="window.location.hash='#marketplace'" style="cursor: pointer;">
+          <div class="action-icon" style="background: rgba(245, 158, 11, 0.12); color: #f59e0b; font-size: 1.3rem;">🏪</div>
+          <div class="action-content">
+            <h4>Marketplace</h4>
+            <p>Discover agent blueprints</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Section 1: Hero Stats -->
       <div class="stats-grid" id="dash-stats">
         ${renderSkeletonStats()}
@@ -99,8 +150,13 @@ export function destroy() {
 
 async function loadDashboardData() {
   const user = getCurrentUser();
-  if (!user) return;
+  if (!user && !isGuestMode()) return;
 
+  if (isGuestMode()) {
+    renderStats(null, []);
+    renderGuestAgents();
+    return;
+  }
   try {
     const [userData, agents] = await Promise.all([
       getUser(user.uid),
@@ -125,6 +181,26 @@ async function loadDashboardData() {
 
   } catch (error) {
     console.error("Error loading dashboard data:", error);
+  }
+}
+
+function renderGuestAgents() {
+  const container = document.getElementById('dash-agents');
+  const feedContainer = document.getElementById('dash-feed');
+  if (container) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <p style="font-size: 0.9rem;">Sign in to see your agents here.</p>
+        <a href="#agents" class="btn btn-primary btn-sm" style="margin-top: 0.75rem;">Get Started</a>
+      </div>
+    `;
+  }
+  if (feedContainer) {
+    feedContainer.innerHTML = `
+      <div class="empty-state">
+        <p style="font-size: 0.9rem;">Activity will appear here once you start running agents.</p>
+      </div>
+    `;
   }
 }
 
@@ -392,7 +468,7 @@ async function renderPendingActions(uid, agents) {
     if (agent.suggestExperiment) {
       actionsHtml += `
         <div class="action-card">
-          <div class="action-icon" style="background: rgba(124, 58, 237, 0.1); color: var(--accent-purple);">
+          <div class="action-icon" style="background: rgba(139, 92, 246, 0.12); color: var(--accent-purple);">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><circle cx="12" cy="15" r="2"/></svg>
           </div>
           <div class="action-content">
@@ -407,7 +483,7 @@ async function renderPendingActions(uid, agents) {
     if (agent.proposedSystemPrompt) {
       actionsHtml += `
         <div class="action-card">
-          <div class="action-icon" style="background: rgba(217, 119, 6, 0.1); color: var(--badge-amber);">
+          <div class="action-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--badge-amber);">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
           <div class="action-content">
@@ -424,7 +500,7 @@ async function renderPendingActions(uid, agents) {
       if (reflections && reflections.length > 0) {
         actionsHtml += `
           <div class="action-card">
-            <div class="action-icon" style="background: rgba(13, 148, 136, 0.1); color: var(--badge-teal);">
+            <div class="action-icon" style="background: rgba(20, 184, 166, 0.12); color: var(--badge-teal);">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             </div>
             <div class="action-content">

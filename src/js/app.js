@@ -1,5 +1,5 @@
 import '../css/main.css';
-import { setupAuthUI, onAuthStateChange } from './auth.js';
+import { setupAuthUI, onAuthStateChange, isGuestMode } from './auth.js';
 import { initRouter } from './router.js';
 import { initToast } from './components/toast.js';
 import { initNotifications } from './components/notifications.js';
@@ -7,6 +7,7 @@ import { initUsageBar } from './components/usage-bar.js';
 import { initRunModal } from './components/run-modal.js';
 
 let currentUser = null;
+let initialized = false;
 
 export function getCurrentUser() {
   return currentUser;
@@ -41,14 +42,22 @@ function setupMobileMenu() {
   }
 }
 
-function setupNotifications() {
-  // Handled by initNotifications now
-}
-
 async function initApp() {
   initToast();
   setupAuthUI();
   setupMobileMenu();
+
+  // Listen for guest mode entry (triggered by guest button in auth.js)
+  const guestBtn = document.getElementById('guest-btn');
+  if (guestBtn) {
+    guestBtn.addEventListener('click', () => {
+      // Guest mode auto-initializes the router
+      if (!initialized) {
+        initRouter();
+        initialized = true;
+      }
+    });
+  }
 
   onAuthStateChange((user) => {
     currentUser = user;
@@ -56,7 +65,10 @@ async function initApp() {
       initNotifications(user.uid);
       initUsageBar();
       initRunModal();
-      initRouter();
+      if (!initialized) {
+        initRouter();
+        initialized = true;
+      }
     }
   });
 }
