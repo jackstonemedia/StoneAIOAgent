@@ -24,8 +24,9 @@ export async function render() {
     <div class="dashboard-container">
       <!-- Welcome Header -->
       <div style="margin-bottom: 2rem;">
-        <h1 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem;">
-          ${getGreeting()}, <span style="background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${displayName}</span>
+        <h1 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span>${getGreeting()},</span>
+          <span style="background: var(--gradient-orange); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; padding-bottom: 0.1rem;">${displayName}</span>
         </h1>
         <p style="color: var(--text-secondary); font-size: 0.95rem;">Here's what's happening with your AI agents today.</p>
       </div>
