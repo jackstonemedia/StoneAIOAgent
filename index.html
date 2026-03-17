@@ -37,46 +37,62 @@
       </div>
     </nav>
 
-    <!-- HERO (Manus Style with Agents & Clouds) -->
-    <section class="landing-hero-manus hero-glass-wrapper">
+    <!-- PHASE 7: Scroll-Scrub Video Wrapper -->
+    <div id="video-scroll-wrapper">
+      <div id="hero-sticky-container">
+        <!-- The Background Video to Scrub -->
+        <video id="hero-bg-video"
+          src="https://res.cloudinary.com/dbdrkehcp/video/upload/wmremove-transformed_tgd3mp.mp4" muted playsinline
+          preload="auto"></video>
+        <!-- Overlay to ensure text readability -->
+        <div class="video-overlay-darken"></div>
 
-      <!-- Animated Cartoon Clouds -->
-      <div class="cloud-layer">
-        <svg class="cloud cloud-1" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
-            fill="rgba(255,255,255,0.7)" />
-        </svg>
-        <svg class="cloud cloud-2" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
-            fill="rgba(255,255,255,0.4)" />
-        </svg>
-        <svg class="cloud cloud-3" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
-            fill="rgba(255,255,255,0.5)" />
-        </svg>
+        <!-- HERO (Manus Style with Agents & Clouds) -->
+        <section class="landing-hero-manus hero-glass-wrapper">
+
+          <!-- Animated Cartoon Clouds -->
+          <div class="cloud-layer">
+            <svg class="cloud cloud-1" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
+                fill="rgba(255,255,255,0.7)" />
+            </svg>
+            <svg class="cloud cloud-2" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
+                fill="rgba(255,255,255,0.4)" />
+            </svg>
+            <svg class="cloud cloud-3" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
+                fill="rgba(255,255,255,0.5)" />
+            </svg>
+          </div>
+
+          <h1 style="position: relative; z-index: 2; margin-top: 4rem;">Your AI agent workforce<br />inside your own
+            Cloud Computer</h1>
+          <p class="landing-subtitle-manus" style="position: relative; z-index: 2;">Deploy specialized AI agents that
+            automate customer support, outbound sales, and workflow execution 24/7. Step into the future of autonomous
+            operation.</p>
+
+          <div class="landing-prompt-manus" onclick="document.getElementById('auth-modal').style.display='flex'">
+            <input type="text" placeholder="Build an internal sales analytics dashboard with CRM data integration."
+              readonly />
+            <button class="landing-prompt-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19V5" />
+                <path d="M5 12l7-7 7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Agent Trio Image -->
+          <img src="/src/assets/agent-trio.png" alt="AI Agent Workforce" class="hero-agent-trio" />
+
+        </section>
       </div>
-
-      <h1>Your AI agent workforce<br />inside your own Cloud Computer</h1>
-      <p class="landing-subtitle-manus" style="position: relative; z-index: 2;">Deploy specialized AI agents that
-        automate customer support, outbound sales, and workflow execution 24/7. Step into the future of autonomous
-        operation.</p>
-
-      <div class="landing-prompt-manus" onclick="document.getElementById('auth-modal').style.display='flex'">
-        <input type="text" placeholder="Build an internal sales analytics dashboard with CRM data integration."
-          readonly />
-        <button class="landing-prompt-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 19V5" />
-            <path d="M5 12l7-7 7 7" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Agent Trio Image -->
-      <img src="/src/assets/agent-trio.png" alt="AI Agent Workforce" class="hero-agent-trio" />
-
-    </section>
+    </div>
 
     <!-- VIDEO SCROLL SECTION -->
     <section class="landing-video-section">
@@ -421,6 +437,52 @@
   </div>
 
   <div id="toast-container"></div>
+
+  <!-- Phase 7: Video Scrubbing Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const video = document.getElementById("hero-bg-video");
+      const wrapper = document.getElementById("video-scroll-wrapper");
+      if (!video || !wrapper) return;
+
+      let duration = 0;
+
+      // Handle the case where the video is already loaded from cache
+      if (video.readyState >= 1) {
+        duration = video.duration;
+      }
+
+      video.addEventListener("loadedmetadata", () => {
+        duration = video.duration;
+      });
+
+      const scrubVideo = () => {
+        if (!duration) return;
+        const rect = wrapper.getBoundingClientRect();
+
+        // rect.top is relative to viewport. 
+        // When wrapper is at the top of the viewport (below nav), it might be slightly offset. 
+        // Let's use rect.top.
+        const scrollPosition = -rect.top + 80; // offset for nav if needed
+        const maxScroll = rect.height - window.innerHeight;
+
+        if (scrollPosition >= 0 && scrollPosition <= maxScroll) {
+          const scrollFraction = scrollPosition / maxScroll;
+          requestAnimationFrame(() => {
+            video.currentTime = duration * scrollFraction;
+          });
+        }
+      };
+
+      const overlay = document.getElementById("login-overlay");
+      if (overlay) {
+        overlay.addEventListener("scroll", scrubVideo, { passive: true });
+      } else {
+        window.addEventListener("scroll", scrubVideo, { passive: true });
+      }
+    });
+  </script>
+
   <script type="module" src="/src/js/app.js"></script>
 </body>
 
