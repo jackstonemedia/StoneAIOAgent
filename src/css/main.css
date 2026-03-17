@@ -1824,3 +1824,106 @@ input:checked+.toggle-slider:before {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ==========================================
+   SINTRA-STYLE LANDING PAGE
+   ========================================== */
+
+/* CTA Button — Blue pill with glow */
+.sintra-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+}
+
+.sintra-cta-btn:hover {
+  background: #3b82f6;
+  box-shadow: 0 0 40px rgba(37, 99, 235, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Agent specialist cards */
+.sintra-agent-card {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.sintra-agent-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-accent, #e8622c);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sintra-agent-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.sintra-agent-card:hover::before {
+  opacity: 1;
+}
+
+/* Override login overlay to be full-page scroll */
+#login-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile responsive for landing */
+@media (max-width: 768px) {
+  .sintra-agent-card {
+    padding: 1.5rem;
+  }
+
+  #login-overlay nav {
+    padding: 1rem 1.5rem !important;
+  }
+
+  #login-overlay nav>div:nth-child(2) {
+    display: none;
+  }
+
+  #login-overlay section {
+    padding: 3rem 1.5rem !important;
+  }
+
+  #login-overlay section h1 {
+    font-size: 2rem !important;
+  }
+
+  #login-overlay section h2 {
+    font-size: 1.75rem !important;
+  }
+
+  #login-overlay footer {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 2rem 1.5rem !important;
+  }
+}
