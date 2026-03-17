@@ -37,11 +37,29 @@
       </div>
     </nav>
 
-    <!-- HERO (Manus Style) -->
-    <section class="landing-hero-manus">
-      <h1>The AI agent platform<br />that actually works</h1>
-      <p class="landing-subtitle-manus">From internal tools to customer-facing software — deploy production-ready agents
-        in minutes, not months.</p>
+    <!-- HERO (Manus Style with Agents & Clouds) -->
+    <section class="landing-hero-manus hero-glass-wrapper">
+
+      <!-- Animated Cartoon Clouds -->
+      <div class="cloud-layer">
+        <svg class="cloud cloud-1" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
+            fill="rgba(255,255,255,0.7)" />
+        </svg>
+        <svg class="cloud cloud-2" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
+            fill="rgba(255,255,255,0.4)" />
+        </svg>
+        <svg class="cloud cloud-3" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 30 Q10 30 10 20 Q10 10 20 10 Q25 0 35 10 Q45 0 55 10 Q65 -5 75 10 Q85 5 90 20 Q100 20 90 30 Z"
+            fill="rgba(255,255,255,0.5)" />
+        </svg>
+      </div>
+
+      <h1>Your AI agent workforce<br />inside your own Cloud Computer</h1>
+      <p class="landing-subtitle-manus" style="position: relative; z-index: 2;">Deploy specialized AI agents that
+        automate customer support, outbound sales, and workflow execution 24/7. Step into the future of autonomous
+        operation.</p>
 
       <div class="landing-prompt-manus" onclick="document.getElementById('auth-modal').style.display='flex'">
         <input type="text" placeholder="Build an internal sales analytics dashboard with CRM data integration."
@@ -55,15 +73,16 @@
         </button>
       </div>
 
-      <div class="landing-tags-manus">
-        <span class="tags-label">What would you like to build?</span>
-        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Email SDR</button>
-        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Content
-          Creator</button>
-        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Voice
-          Caller</button>
-        <button class="tag-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Browser
-          Agent</button>
+      <!-- Agent Trio Image -->
+      <img src="/src/assets/agent-trio.png" alt="AI Agent Workforce" class="hero-agent-trio" />
+
+    </section>
+
+    <!-- VIDEO SCROLL SECTION -->
+    <section class="landing-video-section">
+      <div class="glass-video-container reactive-hover">
+        <video src="/src/assets/hero-video.mp4" autoplay loop muted playsinline loading="lazy"></video>
+        <div class="video-overlay-glow"></div>
       </div>
     </section>
 
